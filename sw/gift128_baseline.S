@@ -1,3 +1,10 @@
+# Código baseline (assembly ingênuo) do GIFT-128 baseado no código disponível em:
+# https://github.com/gra2p/gift_risc-v/blob/master/gift/baseline128.riscv
+# do artigo: Gheorghe Pojoga and Kostas Papagiannopoulos. 2022. Low-latency implementation of the GIFT cipher on RISC-V architectures. In Proceedings of the 19th ACM International Conference on Computing Frontiers (CF '22). Association for Computing Machinery, New York, NY, USA, 287–295. https://doi.org/10.1145/3528416.3530996
+# Apenas pequenas modificações foram feitas para adaptação ao PicoRV32 e 
+# comentários explicando as etapas do algoritmo foram adicionados.
+
+
 # Mapeamento de Registradores:
 # a0 - a3 : Armazenam a Chave (Key)
 # s0 - s3 : Armazenam o Texto Plano / Texto Cifrado (Estado interno de 128 bits)
