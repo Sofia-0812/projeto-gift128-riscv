@@ -12,10 +12,7 @@ A solução proposta funde essas duas etapas em um módulo combinacional integra
 O desenvolvimento foi dividido em três frentes principais, refletidas nas pastas deste repositório:
 
 ### 1. Hardware (`/hw`)
-Contém os arquivos de descrição de hardware (Verilog/VHDL) que compõem o sistema:
-* **PicoRV32 Modificado:** O núcleo processador base foi alterado para incluir a nova lógica de decodificação e os sinais de controle (`load_enable`, `execute_enable`, `read_enable`).
-* **Módulo GIFT-128:** Implementação do buffer de 128 bits e da lógica combinacional das S-Boxes e *hardwiring* da permutação.
-* **Componentes de Integração:** Implementação do MUX de retorno (*writeback*) e do DEMUX de carga para gerenciar o estado criptográfico.
+Contém os arquivos de descrição de hardware (Verilog/VHDL) que compõem o sistema
 
 ### 2. Software (`/sw`)
 Arquivos relacionados à execução e teste no processador:
