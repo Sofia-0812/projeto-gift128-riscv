@@ -31,6 +31,8 @@ module tb_gift128;
         // s10 contém o total de ciclos
         $display("Ciclos totais: %d", uut.cpuregs[26]); 
         $display("========================================");
+        //  Imprimir o registradores com ciclos do gargalo
+         $display("Ciclos do Gargalo (a5): %d", uut.cpuregs[15]);
 
         $display("Simulacao finalizada!");
         $finish;

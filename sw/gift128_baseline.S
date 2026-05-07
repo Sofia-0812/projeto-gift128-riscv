@@ -12,7 +12,8 @@
 # s5      : Endereço base da tabela de substituição (S-box) na memória
 # s6 - s9 : Registradores temporários para cálculos
 # a4      : Ponteiro para as constantes de rodada
-# s10, s11: Reservados para medição de desempenho (benchmarking)
+# s10, s11: Reservados para medição de desempenho total (benchmarking)
+# a5      : Acumulador de ciclos para a Lei de Amdahl (Fração f)
 
 # MACROS DE DESLOCAMENTO (SHIFT)
 # Estas duas macros abaixo mostram que a manipulação de bits em software demanda múltiplas 
@@ -272,7 +273,7 @@
 	
 	main:
 
-	# Captura o estado inicial do contador de ciclos
+	# Captura o estado inicial do contador de ciclos totais
         # rdcycle lê os 32 bits inferiores; rdcycleh lê os 32 bits superiores
         rdcycle s10
         rdcycleh s11
@@ -311,10 +312,16 @@
 
 		# 4. Inicializa o contador de rodadas (GIFT-128 possui 40 rodadas)
 		li s4, 40
+        
+        # 5. Inicializa o acumulador da Lei de Amdahl em zero
+        li a5, 0
 		
         # LAÇO PRINCIPAL 
 		DO:
 			
+            # --- INÍCIO DA MEDIÇÃO DA FRAÇÃO 'f' ---
+            rdcycle t4             # t4 liga o cronômetro do gargalo
+
             # --- Etapa 1: SubCells ---
 			# Insere não linearidade aplicando a S-box a cada registrador.
 			SubCells s0
@@ -325,6 +332,11 @@
 			# --- Etapa 2: PermBits ---
 			# Reorganiza os bits do estado.
 			PermBits
+
+            # --- FIM DA MEDIÇÃO DA FRAÇÃO 'f' ---
+            rdcycle t5             # t5 desliga o cronômetro do gargalo
+            sub t6, t5, t4         # t6 = tempo gasto apenas nessas 2 funções nesta rodada
+            add a5, a5, t6         # a5 acumula os ciclos do gargalo 
 
 			# --- Etapa 3: AddRoundKey ---
 			# Combina a chave de rodada com o estado atual usando XOR bit a bit.
