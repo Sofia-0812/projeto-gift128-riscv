@@ -1,8 +1,9 @@
 module tb_gift128;
     reg clk = 0;
     reg resetn = 0;
+    wire trap; // Adicionado sinal de trap
     
-    // Cria um relógio (clock) simulado
+    // Cria um relógio (clock) simulado (10ns período -> 100MHz)
     always #5 clk = ~clk; 
 
     initial begin
@@ -13,8 +14,10 @@ module tb_gift128;
         // Tira o processador do Reset
         #100 resetn = 1;
         
-        // Deixa o processador rodar por um tempo suficiente para o GIFT-128 terminar
-        #2000000;
+        // Aguarda o processador sinalizar o fim (trap)
+        wait(trap);
+        // Pequeno atraso para garantir que os últimos registradores sejam atualizados
+        #20;
         
         // IMPRIME OS REGISTRADORES S0, S1, S2 e S3 DIRETO NO TERMINAL!
         $display("========================================");
@@ -23,6 +26,10 @@ module tb_gift128;
         $display("s1 (Reg 9)  : %h", uut.cpuregs[9]);
         $display("s2 (Reg 18) : %h", uut.cpuregs[18]);
         $display("s3 (Reg 19) : %h", uut.cpuregs[19]);
+        $display("----------------------------------------");
+        $display("MÉTRICAS DE DESEMPENHO:");
+        // s10 contém o total de ciclos
+        $display("Ciclos totais: %d", uut.cpuregs[26]); 
         $display("========================================");
 
         $display("Simulacao finalizada!");
@@ -42,6 +49,7 @@ module tb_gift128;
     picorv32 uut (
         .clk(clk),
         .resetn(resetn),
+        .trap(trap),       // Conectado o sinal de trap
         .mem_valid(mem_valid),
         .mem_instr(mem_instr),
         .mem_ready(mem_ready),

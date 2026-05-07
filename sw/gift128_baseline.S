@@ -271,8 +271,21 @@
 	.globl main
 	
 	main:
+
+	# Captura o estado inicial do contador de ciclos
+        # rdcycle lê os 32 bits inferiores; rdcycleh lê os 32 bits superiores
+        rdcycle s10
+        rdcycleh s11
+
 		la t0, encrypt # Carrega o endereço da função de encriptação
-		jalr zero, 0(t0) # Salta para a função
+		jalr ra, 0(t0) # Salta para a função
+
+		rdcycle t2             # Captura ciclo final (parte baixa)
+        rdcycleh t3            # Captura ciclo final (parte alta)
+        sub s10, t2, s10       # s10 = Ciclos totais gastos
+        sub s11, t3, s11       # s11 = Diferença da parte alta
+
+		ebreak
 
 .section .text,"ax",@progbits
 	.globl encrypt
@@ -355,7 +368,7 @@
 		addi s4, s4, -1
 		WHILE: bne s4, zero, DO
 
-	END: j END
+	ret
 
 # ÁREA DE DADOS
 .section .data
