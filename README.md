@@ -33,5 +33,5 @@ Para compilar e simular este projeto, são necessárias as seguintes ferramentas
    Após gerar o arquivo `.hex`, navegue até a pasta `/sim` e utilize o Icarus Verilog para simular a execução no núcleo original do PicoRV32.
    ```bash
    cd ../sim
-   iverilog -o sim_baseline testbench_ez.v ../hw/picorv32.v
+   iverilog -o sim_baseline tb_gift128.v ../hw/picorv32.v
    ./sim_baseline
