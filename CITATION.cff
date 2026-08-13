@@ -1,0 +1,28 @@
+cff-version: 1.0.1
+message: Otimized gift128 instruction set on RISCV.
+title: Extensão do Conjunto de Instruções em Arquitetura RISC-V para Otimização do Algoritmo Criptográfico GIFT-128
+authors:
+  - family-names: Grossi Vieira Santos
+    given-names: Sofia
+  - family-names: Tristão Pinto
+    given-names: Arthur Henrique 
+  - family-names: Pereira Mesquita Faria
+    given-names: Filipi
+  - family-names: Thurow Buzzi
+    given-names: Julio Cesar
+  - family-names: Ferreira Costa
+    given-names: Luis Henrique  
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Alcântara
+    given-names: Matheus
+keywords:
+  - gift128
+  - cypher
+  - RISCV
+  - hardware acceleration
+  - instruction set extension 
+repository-code: https://github.com/Sofia-0812/projeto-gift128-riscv.git 
+license: CC-BY-4.0
+version: 1.0.0
+date-released: 2026-06-14
